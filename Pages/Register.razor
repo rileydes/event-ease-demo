@@ -1,0 +1,82 @@
+@page "/{EventName}/register"
+@using System.ComponentModel.DataAnnotations
+@using EventEase.Services
+@inject NavigationManager Navigation
+@inject AttendanceService Attendance
+@inject UserSessionService UserSession
+
+<h3>Register for @EventName</h3>
+
+<EditForm Model="@registrationModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div>
+        <label>Name:</label>
+        <InputText @bind-Value="registrationModel.Name" class="form-control" />
+        <ValidationMessage For="@(() => registrationModel.Name)" />
+    </div>
+    <br>
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="registrationModel.Email" class="form-control" />
+        <ValidationMessage For="@(() => registrationModel.Email)" />
+    </div>
+    <br>
+    
+    <div class="action-buttons">
+        <button type="cancel" class="btn btn-secondary" @onclick="BackToEventList">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</EditForm>
+
+@if (registrationSuccess)
+{
+    <p class="text-success">Registration successful!</p>
+}
+
+@code {
+    private RegistrationModel registrationModel = new();
+    private bool registrationSuccess = false;
+
+    [Parameter]
+    public string EventName {get; set;} = "";
+
+    public class RegistrationModel
+    {
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; } = "";
+
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string Email { get; set; } = "";
+    }
+
+    protected override void OnInitialized()
+    {
+        if (UserSession?.IsRegistered == true)
+        {
+            registrationModel.Name = UserSession.CurrentUsername ?? "";
+            registrationModel.Email = UserSession.CurrentEmail ?? "";
+        }
+    }
+
+    private void HandleValidSubmit()
+    {
+        try
+        {
+            UserSession.RegisterUser(registrationModel.Name, registrationModel.Email);
+            Attendance.Register(EventName, registrationModel.Name);
+            registrationSuccess = true;
+            Navigation.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            registrationSuccess = false;
+            Console.WriteLine($"Error happened during registration: {ex.Message}");
+        }
+    }
+
+    private void BackToEventList()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

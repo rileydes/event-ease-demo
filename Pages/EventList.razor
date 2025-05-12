@@ -1,0 +1,30 @@
+@page "/"
+@using EventEase.Services
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@inject UserSessionService UserSession
+
+<div class="top-row">
+<h1>Upcoming Events</h1>
+</div>
+
+@if (UserSession?.IsRegistered == true)
+{
+    <p>Hi @UserSession.CurrentUsername, want to register for more?</p>
+}
+
+<Virtualize Items="@events" Context="evt">
+    <br>
+    <EventCard @key="evt.Name" currentEvent="evt" />
+    <br>
+</Virtualize>
+
+
+
+@code {
+    private List<Event> events = new()
+    {
+        new Event { Name = "Tech Conference 2025", Date = new DateTime(2025, 6, 10), Location = "New York" },
+        new Event { Name = "Startup Pitch Night", Date = new DateTime(2025, 7, 22), Location = "San Francisco" },
+        new Event { Name = "Developer Meetup", Date = new DateTime(2025, 8, 5), Location = "Austin" }
+    };
+}

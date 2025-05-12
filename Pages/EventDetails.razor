@@ -1,0 +1,32 @@
+@page "/{EventName}"
+@using System.Globalization
+@using Microsoft.AspNetCore.Components
+@using static DummyEvents
+
+<h2>Event Details</h2>
+
+@if (string.IsNullOrWhiteSpace(EventName) || !DummyEvents.ValidEventNames.Contains(EventName))
+{
+    <p><em>Sorry, this event doesn't exist or the name is invalid.</em></p>
+}
+else
+{
+    <p><strong>Event:</strong> @currentEvent?.Name</p>
+    <p class="event-date"><strong>Date:</strong> @currentEvent?.Date.ToString("D", CultureInfo.CurrentCulture)</p>
+    <p class="event-location"><strong>Location:</strong> @currentEvent?.Location</p>
+    <p>More details for this event will be available soon.</p>
+}
+
+<NavLink href="/">Back to Events</NavLink>
+
+@code {
+    [Parameter] public string EventName { get; set; } = "";
+
+    [Parameter] public Event? currentEvent {get; set;}
+
+    protected override void OnInitialized()
+    {
+        currentEvent = events.FirstOrDefault(e => e.Name == EventName);
+    }
+}
+
