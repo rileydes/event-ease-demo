@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "bbLj3aZ1dJc=",
+  "dgSpecHash": "W9rBF1nkBR4=",
   "success": true,
   "projectFilePath": "/Users/nova/projects/intro_to_blazor/EventEaseApp/EventEaseApp.csproj",
   "expectedPackageFiles": [
@@ -29,8 +29,7 @@
     "/Users/nova/.nuget/packages/microsoft.jsinterop/9.0.4/microsoft.jsinterop.9.0.4.nupkg.sha512",
     "/Users/nova/.nuget/packages/microsoft.jsinterop.webassembly/9.0.4/microsoft.jsinterop.webassembly.9.0.4.nupkg.sha512",
     "/Users/nova/.nuget/packages/microsoft.net.illink.tasks/9.0.4/microsoft.net.illink.tasks.9.0.4.nupkg.sha512",
-    "/Users/nova/.nuget/packages/microsoft.net.sdk.webassembly.pack/9.0.4/microsoft.net.sdk.webassembly.pack.9.0.4.nupkg.sha512",
-    "/Users/nova/.nuget/packages/microsoft.netcore.app.runtime.mono.browser-wasm/9.0.4/microsoft.netcore.app.runtime.mono.browser-wasm.9.0.4.nupkg.sha512"
+    "/Users/nova/.nuget/packages/microsoft.net.sdk.webassembly.pack/9.0.4/microsoft.net.sdk.webassembly.pack.9.0.4.nupkg.sha512"
   ],
   "logs": []
 }
