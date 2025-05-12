@@ -4,11 +4,9 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
-  <PropertyGroup>
-  <PublishRepositoryUrl>true</PublishRepositoryUrl>
-  <PublishUrl>docs</PublishUrl>
+    <OutputPath>$(MSBuildProjectDirectory)/docs/</OutputPath>
+  <BlazorEnableCompression>true</BlazorEnableCompression>
+  <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
   </PropertyGroup>
   
   <ItemGroup>

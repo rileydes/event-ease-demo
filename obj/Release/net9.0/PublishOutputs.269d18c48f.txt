@@ -1,0 +1,5 @@
+/Users/nova/projects/intro_to_blazor/EventEaseApp/docs/docs/web.config
+/Users/nova/projects/intro_to_blazor/EventEaseApp/docs/docs/EventEaseApp.staticwebassets.endpoints.json
+/Users/nova/projects/intro_to_blazor/EventEaseApp/docs/docs/wwwroot/sample-data/weather.json
+/Users/nova/projects/intro_to_blazor/EventEaseApp/docs/docs/wwwroot/_framework/blazor.boot.json
+/Users/nova/projects/intro_to_blazor/EventEaseApp/docs/web.config
