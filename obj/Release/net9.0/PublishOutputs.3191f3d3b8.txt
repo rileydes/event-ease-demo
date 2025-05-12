@@ -1,0 +1,1 @@
+/Users/nova/projects/intro_to_blazor/EventEaseApp/bin/Release/net9.0/publish/web.config
