@@ -1,16 +1,17 @@
 @using System.Globalization
 @inject NavigationManager NavigationManager
 
-<div class="event-card" style="display: inline-block; border: 2px solid #333; padding: 1rem; border-radius: 32px;">
+<div class="event-card-modern">
     <h2>@currentEvent?.Name</h2>
     <p class="event-date">@currentEvent?.Date.ToString("D", CultureInfo.CurrentCulture)</p>
     <p class="event-location">@currentEvent?.Location</p>
 
     <div class="action-buttons">
-        <button class="btn btn-secondary" @onclick="NavigateToEventDetails">View Details</button>
-        <button class="btn btn-primary" @onclick="RegisterForEvent">Register</button>
+        <button class="btn-secondary" @onclick="NavigateToEventDetails">View Details</button>
+        <button class="btn-primary" @onclick="RegisterForEvent">Register</button>
     </div>
 </div>
+
 
 @code {
     [Parameter] public Event? currentEvent {get; set;}

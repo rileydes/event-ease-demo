@@ -2,29 +2,45 @@
 @using EventEase.Services
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @inject UserSessionService UserSession
+@inject EventService EventService
 
-<div class="top-row">
-<h1>Upcoming Events</h1>
+<div class="top-row-modern">
+    <h1>Upcoming Events</h1>
+    @if (UserSession?.IsRegistered == true)
+    {
+        <span class="logout-link">
+            <a href="#" @onclick="Logout">Logout</a>
+        </span>
+    }
 </div>
 
 @if (UserSession?.IsRegistered == true)
 {
-    <p>Hi @UserSession.CurrentUsername, want to register for more?</p>
+    <p class="greeting-text">Hi @UserSession.CurrentUsername, want to register for more?</p>
 }
 
-<Virtualize Items="@events" Context="evt">
-    <br>
-    <EventCard @key="evt.Name" currentEvent="evt" />
-    <br>
-</Virtualize>
+<div class="event-grid">
+    <Virtualize Items="@events" Context="evt">
+        <div class="event-grid-item">
+            <EventCard @key="evt.Name" currentEvent="evt" />
+        </div>
+    </Virtualize>
+</div>
+
+
 
 
 
 @code {
-    private List<Event> events = new()
+    private List<Event> events = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        new Event { Name = "Tech Conference 2025", Date = new DateTime(2025, 6, 10), Location = "New York" },
-        new Event { Name = "Startup Pitch Night", Date = new DateTime(2025, 7, 22), Location = "San Francisco" },
-        new Event { Name = "Developer Meetup", Date = new DateTime(2025, 8, 5), Location = "Austin" }
-    };
+        events = await EventService.GetEvents();
+    }
+
+    private void Logout()
+    {
+        UserSession.Logout();
+    }
 }

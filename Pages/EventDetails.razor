@@ -1,32 +1,68 @@
 @page "/{EventName}"
 @using System.Globalization
 @using Microsoft.AspNetCore.Components
-@using static DummyEvents
+@using EventEase.Services
+@inject EventService EventService
+@inject AttendanceService AttendanceService
 
-<h2>Event Details</h2>
+<div class="event-details-container">
+    <h2>Event Details</h2>
 
-@if (string.IsNullOrWhiteSpace(EventName) || !DummyEvents.ValidEventNames.Contains(EventName))
-{
-    <p><em>Sorry, this event doesn't exist or the name is invalid.</em></p>
-}
-else
-{
-    <p><strong>Event:</strong> @currentEvent?.Name</p>
-    <p class="event-date"><strong>Date:</strong> @currentEvent?.Date.ToString("D", CultureInfo.CurrentCulture)</p>
-    <p class="event-location"><strong>Location:</strong> @currentEvent?.Location</p>
-    <p>More details for this event will be available soon.</p>
-}
+    @if (string.IsNullOrWhiteSpace(EventName) || currentEvent == null)
+    {
+        <p class="event-error"><em>Sorry, this event doesn't exist or the name is invalid.</em></p>
+    }
+    else
+    {
+        <div class="event-details-card">
+            <p><strong>Event:</strong> @currentEvent?.Name</p>
+            <p><strong>Date:</strong> @currentEvent?.Date.ToString("D", CultureInfo.CurrentCulture)</p>
+            <p><strong>Location:</strong> @currentEvent?.Location</p>
 
-<NavLink href="/">Back to Events</NavLink>
+            <h4>Attendees</h4>
+            @if (attendees.Any())
+            {
+                <ul class="attendee-list">
+                    @foreach (var attendee in attendees)
+                    {
+                        <li>@attendee</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="no-attendees">No attendees registered yet.</p>
+            }
+
+            <p class="coming-soon">More details for this event will be available soon.</p>
+        </div>
+    }
+
+    <NavLink href="/" class="back-link">← Back to Events</NavLink>
+</div>
+
 
 @code {
     [Parameter] public string EventName { get; set; } = "";
 
     [Parameter] public Event? currentEvent {get; set;}
 
-    protected override void OnInitialized()
+    private List<string> attendees = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        currentEvent = events.FirstOrDefault(e => e.Name == EventName);
+        try 
+        {
+            currentEvent = await EventService.GetEventByName(EventName);
+        if (currentEvent != null)
+        {
+            attendees = AttendanceService.GetAttendees(currentEvent.Name).ToList();
+        }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex}");
+        }
+        
     }
 }
-
