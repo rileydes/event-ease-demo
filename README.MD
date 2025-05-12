@@ -25,7 +25,7 @@ Built using Blazor WebAssembly
 1. Clone the repository:
    ```bash
    git clone https://github.com/rileydes/event-ease-demo.git
-   cd EventEaseApp
+   cd event-ease-demo
    ```
 2. Restore
    ```bash
@@ -33,7 +33,7 @@ Built using Blazor WebAssembly
    ```
 3. Run the app:
    ```bash
-   dotnet run
+   dotnet watch run
    ```
 4. Access the app in your browser at `http://localhost:5055`.
     May be at a different port, look at the output of the dotnet run command
